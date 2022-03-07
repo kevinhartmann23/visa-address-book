@@ -1,3 +1,4 @@
+import { GlobalStateProvider } from './context/AppContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css';
@@ -5,8 +6,10 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Footer />
+      <GlobalStateProvider>
+        <Header />
+        <Footer />
+      </ GlobalStateProvider>
     </div>
   );
 }

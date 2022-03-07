@@ -12,8 +12,8 @@ const StyledAppBar = styled(AppBar)({
   bottom: 0,
 })
 
-const StyledFab = styled(Fab)({
-  backgroundColor: alpha('#F7BD19', 0.8),
+const StyledFab = styled(Fab)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.secondary.main, 0.8),
   position: 'absolute',
   zIndex: 1,
   top: -30,
@@ -21,9 +21,9 @@ const StyledFab = styled(Fab)({
   right: 0,
   margin: '0 auto',
   '&:hover': {
-    backgroundColor: alpha('#F7BD19', 1),
+    backgroundColor: alpha(theme.palette.secondary.main, 1),
   },
-});
+}));
 
 const Footer = () => {
   return (

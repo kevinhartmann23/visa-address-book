@@ -3,8 +3,8 @@ import { styled, alpha } from '@mui/material/styles';
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import ContactsIcon from '@mui/icons-material/Contacts';
-import AddTaskIcon from '@mui/icons-material/AddTask';
-import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Box from '@mui/material/Box';
 import { CardActionArea, CardActions } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -70,8 +70,8 @@ const CardFade = ({ title, redirectUrl, iconName }: IProps) => {
         <CardActionArea>
         <StyledBox>
           {iconName === 'contacts' && <ContactsIcon sx={{color: '#F7BD19', fontSize: '90px'}} />}
-          {iconName === 'added' && <AddTaskIcon sx={{ color: '#F7BD19', fontSize: '90px', }} />}
-          {iconName === 'deleted' && <RestoreFromTrashIcon sx={{ color: '#F7BD19', fontSize: '90px', }} />}
+          {iconName === 'favorites' && <FavoriteIcon sx={{ color: '#F7BD19', fontSize: '90px' }} />}
+          {iconName === 'new contact' && <AddCircleIcon sx={{ color: '#F7BD19', fontSize: '90px', }} />}
           <StyledTypog variant='h3'>{title}</StyledTypog>
         </StyledBox>
         <Box sx={{ flexGrow: 1 }} />

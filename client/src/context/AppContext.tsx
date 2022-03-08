@@ -8,7 +8,6 @@ import React, {
 
 export interface GlobalStateInterface {
   allContacts: {}[] | undefined
-  favoriteContacts: {}[] | undefined
   recentlyDeleted: {}[] | undefined
 }
 

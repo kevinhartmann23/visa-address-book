@@ -10,33 +10,34 @@ const Dashboard = () => {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const getFavorites = async () => {
+  const getContacts = async () => {
     setError(false)
     setLoading(true)
 
-    const configFav: CONFIG = {
+    const config: CONFIG = {
       method: 'GET',
-      endpoint: 'api/favorites'
+      endpoint: 'api/contacts'
     }
 
-    const [isFavRequestSuccessful, favResponse] = await axiosRequestHandler(configFav)
+    const [isRequestSuccessful, response] = await axiosRequestHandler(config)
 
-    if (isFavRequestSuccessful) {
+    if (isRequestSuccessful) {
+      const data = JSON.parse(response.data)
       setAppState({
         ...appState,
-        favoriteContacts: JSON.parse(favResponse.data),
+        allContacts: data,
       })
     } else {
       setError(true)
-      console.log(favResponse)
+      console.log(response)
     }
   }
 
   useEffect(() => {
-    if (!appState.favoriteContacts) {
-      getFavorites()
+    if (!appState.allContacts) {
+      getContacts()
     }
-  }, [appState.favoriteContacts])
+  }, [appState.allContacts])
 
   return (
     <div style={{padding: '2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
@@ -45,8 +46,8 @@ const Dashboard = () => {
       </ Box>
       <Box sx={{ height: '100%', width: '45%', padding: '1rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }} >
           <CardFade title='All Contacts' iconName='contacts' redirectUrl='/contacts'/>
-          <CardFade title='Newly Added' iconName='added' redirectUrl='/recently-added' />
-          <CardFade title='Deleted' iconName='deleted' redirectUrl='/recently-deleted' />
+          <CardFade title='Favorites' iconName='favorites' redirectUrl='/favorites' />
+          <CardFade title='Add Contact' iconName='new contact' redirectUrl='/add-new-contact' />
       </Box>
     </div>
   );

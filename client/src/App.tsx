@@ -3,8 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import AllContacts from './components/AllContacts';
-import Favorites from './components/Favorites';
-import RecentlyDeleted from './components/RecentlyDeleted';
+import NewContactDisplay from './components/RecentlyDeleted';
 import NotFound from './components/NotFound';
 import Footer from './components/Footer';
 import './App.css';
@@ -16,9 +15,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Dashboard/>} />
-          <Route path='/favorites' element={<Favorites/>} />
-          <Route path='/contacts' element={<AllContacts/>} />
-          <Route path='/recently-deleted' element={<RecentlyDeleted/>} />
+          <Route path='/favorites' element={<AllContacts title='Favorites' />} />
+          <Route path='/contacts' element={<AllContacts title='All Contacts'/>} />
+          <Route path='/add-new-contact' element={<NewContactDisplay/>} />
           <Route path='*' element={<NotFound/>} />
         </Routes>
         <Footer />

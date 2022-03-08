@@ -1,11 +1,11 @@
 import React from 'react';
 
-const RecentlyDeleted = () => {
+const NewContactDisplay = () => {
   return (
     <div style={{ height: '90vh', backgroundColor: 'pink' }}>
-      RECENTLY DELETED
+      ADD NEW CONTACT
     </div>
   );
 }
 
-export default RecentlyDeleted;
+export default NewContactDisplay;

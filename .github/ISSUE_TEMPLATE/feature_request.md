@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Addtional features to add
-title: ''
-labels: ''
-assignees: ''
+title: Feature/
+labels: enhancement
+assignees: '@kevinhartmann23'
 
 ---
 

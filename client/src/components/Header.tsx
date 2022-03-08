@@ -18,9 +18,9 @@ const StyledHeader = styled(AppBar)({
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha('#3E3E3E', 0.1),
+  backgroundColor: alpha('#EBEBEB', 0.5),
   '&:hover': {
-    backgroundColor: alpha('#3E3E3E', 0.15),
+    backgroundColor: alpha('#EBEBEB', 1),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,

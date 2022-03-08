@@ -2,45 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { useGlobalState } from '../context/AppContext'
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import Box from '@mui/material/Box';
+import CardFade from './CardFade';
+import FavoritesDisplay from './FavoritesDisplay';
 
 const Dashboard = () => {
   const { setAppState, appState } = useGlobalState()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const getAllContacts = async () => {
+  const getFavorites = async () => {
     setError(false)
     setLoading(true)
 
-    const config: CONFIG = {
+    const configFav: CONFIG = {
       method: 'GET',
-      endpoint: 'api/contacts'
+      endpoint: 'api/favorites'
     }
 
-    const [isRequestSuccessful, response] = await axiosRequestHandler(config)
+    const [isFavRequestSuccessful, favResponse] = await axiosRequestHandler(configFav)
 
-    if (isRequestSuccessful) {
+    if (isFavRequestSuccessful) {
       setAppState({
         ...appState,
-        allContacts: response.data
+        favoriteContacts: JSON.parse(favResponse.data),
       })
     } else {
       setError(true)
-      console.log(response)
+      console.log(favResponse)
     }
   }
 
   useEffect(() => {
-    getAllContacts()
-  }, [appState.allContacts])
+    if (!appState.favoriteContacts) {
+      getFavorites()
+    }
+  }, [appState.favoriteContacts])
 
   return (
-    <div style={{padding: '1rem 1rem 2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-      <Box sx={{backgroundColor: '#FFF', height: '100%', width: '45%'}}>
-          Contact List ... 
+    <div style={{padding: '2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <Box sx={{height: '100%', width: '45%'}}>
+          <FavoritesDisplay />
       </ Box>
-      <Box sx={{ backgroundColor: '#FFF', height: '100%', width: '45%' }} >
-          favorites, recents buttons
+      <Box sx={{ height: '100%', width: '45%', padding: '1rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }} >
+          <CardFade title='All Contacts' iconName='contacts' redirectUrl='/contacts'/>
+          <CardFade title='Newly Added' iconName='added' redirectUrl='/recently-added' />
+          <CardFade title='Deleted' iconName='deleted' redirectUrl='/recently-deleted' />
       </Box>
     </div>
   );

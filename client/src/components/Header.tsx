@@ -12,7 +12,8 @@ import visaLogo from '../assets/visa_logo.png'
 
 const StyledHeader = styled(AppBar)({
   backgroundColor: "#FFF",
-  position: 'static'
+  position: 'static',
+  height: '4rem'
 })
 
 const Search = styled('div')(({ theme }) => ({
@@ -73,7 +74,7 @@ const Header = () => {
           <Typography
             variant="h1"
             noWrap
-            component="div"
+            component="h1"
             sx={{ display: { xs: 'none', sm: 'block' }, color: '#3E3E3E', fontSize: '20px' }}
           >
             Address Book

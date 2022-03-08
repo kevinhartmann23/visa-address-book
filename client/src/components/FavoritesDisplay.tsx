@@ -13,12 +13,10 @@ const FavoritesDisplay = () => {
 
   
   useEffect(() => {
-    if (appState.favoriteContacts){
-      setFavorites(appState.favoriteContacts.splice(0, 6))
-    } else {
-      setFavorites([])
+    if (appState.allContacts){
+      setFavorites(appState.allContacts.filter((el: any) => el.favorite === true).splice(0, 6))
     }
-  }, [appState.favoriteContacts])
+  }, [appState.allContacts])
   
   return (
     <Box sx={{ flexGrow: 1 }}>

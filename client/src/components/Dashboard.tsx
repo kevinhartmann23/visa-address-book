@@ -45,8 +45,8 @@ const Dashboard = () => {
       </ Box>
       <Box sx={{ height: '100%', width: '45%', padding: '1rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }} >
           <CardFade title='All Contacts' iconName='contacts' redirectUrl='/contacts'/>
-          <CardFade title='Newly Added' iconName='added' redirectUrl='/recently-added' />
-          <CardFade title='Deleted' iconName='deleted' redirectUrl='/recently-deleted' />
+          <CardFade title='Favorites' iconName='favorites' redirectUrl='/favorites' />
+          <CardFade title='Add Contact' iconName='new contact' redirectUrl='/add-new-contact' />
       </Box>
     </div>
   );

@@ -14,7 +14,7 @@ const FavoritesDisplay = () => {
   
   useEffect(() => {
     if (appState.favoriteContacts){
-      setFavorites(appState.favoriteContacts)
+      setFavorites(appState.favoriteContacts.splice(0, 6))
     } else {
       setFavorites([])
     }
@@ -22,7 +22,7 @@ const FavoritesDisplay = () => {
   
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Typography variant="overline" component='h2' color="initial" sx={{width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem'}}>Favorites</Typography>
+      <Typography variant="overline" component='h2' color="initial" sx={{width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem'}}>Top Favorites</Typography>
       <Divider sx={{marginBottom: '1rem'}}/>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {favorites!.length > 0 && favorites!.map((obj: any, index: number) => (

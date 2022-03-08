@@ -15,6 +15,8 @@ app.use(
   })
 )
 
+app.use(express.static('./ui'))
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Application works!');
 });

@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000
 
 
 app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}\nbuild date: ${process.env.BUILD_DATE}`);
+  console.log(`Listening on PORT:\n ~~~~${PORT}~~~~`);
 });
 
 

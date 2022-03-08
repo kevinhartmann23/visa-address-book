@@ -35,7 +35,7 @@ const Dashboard = () => {
   }, [appState.allContacts])
 
   return (
-    <div style={{padding: '1rem 1rem 2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+    <div style={{padding: '2rem 1rem', height: '80vh',  backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
       <Box sx={{backgroundColor: '#FFF', height: '100%', width: '45%'}}>
           Contact List ... 
       </ Box>

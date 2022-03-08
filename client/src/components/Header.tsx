@@ -12,7 +12,8 @@ import visaLogo from '../assets/visa_logo.png'
 
 const StyledHeader = styled(AppBar)({
   backgroundColor: "#FFF",
-  position: 'static'
+  position: 'static',
+  height: '4rem'
 })
 
 const Search = styled('div')(({ theme }) => ({

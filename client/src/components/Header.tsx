@@ -74,7 +74,7 @@ const Header = () => {
           <Typography
             variant="h1"
             noWrap
-            component="div"
+            component="h1"
             sx={{ display: { xs: 'none', sm: 'block' }, color: '#3E3E3E', fontSize: '20px' }}
           >
             Address Book

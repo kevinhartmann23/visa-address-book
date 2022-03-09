@@ -33,6 +33,30 @@ router.post('/contacts', (req, res) => {
   }
 })
 
+router.post('/contacts/update', (req: Request, res : Response) => {
+  
+  console.log('HERE -> ROUTES.TSX', req.query.id )
+  const { id } = req.query
+
+  try {
+    
+    if(!id) {
+      throw new Error('Request missing a parameter. {id: <String>}')
+    }
+
+    const index = app.locals.contacts.findIndex((e:any) => e.id === id)
+    app.locals.contacts[index] = req.body
+    
+    res.status(201).send({
+      data: JSON.stringify(app.locals),
+      message: `Contact successfully updated!`
+    })
+
+  } catch ( err: any ) {
+    res.status(422).send(JSON.stringify(err.message))
+  }
+})
+
 //DELETE
 
 router.delete('/contacts/:id', async (req: Request, res: Response) => {

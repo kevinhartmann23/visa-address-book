@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { useGlobalState, GlobalContactInterface } from '../context/AppContext';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,6 +25,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: any) => {
   const { appState, setAppState } = useGlobalState()
   const navigate = useNavigate()
+  const location = useLocation()
   const [favorited, setFavorited] = useState(favorite)
   const [viewMore, setViewMore] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -72,8 +73,12 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
       favorite: favorited,
       id
     }
-
-    navigate(`contacts/${id}`, { state: config})
+    
+    if (location.pathname === '/') {
+      navigate(`contacts/${id}`)
+    } else {
+      navigate(`/contacts/${id}`, { replace: true})
+    }
   }
   
   return (

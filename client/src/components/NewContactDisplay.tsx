@@ -67,15 +67,16 @@ const NewContactDisplay = () => {
 
     const config: CONFIG = {
       method: 'POST',
-      endpoint: 'api/contacts',
+      endpoint: 'api/contacts/update',
       params: { id },
-      data: configData(),
+      data: configData()
     }
 
     const [isRequestSuccessful, response] = await axiosRequestHandler(config)
 
     if (isRequestSuccessful) {
       const data = JSON.parse(response.data)
+      
       resetRefs()
       setAppState({
         ...appState,
@@ -109,17 +110,40 @@ const NewContactDisplay = () => {
     return config
   }
 
+  const findContact = (id: any) => {
+    return appState.allContacts!.find((e: any) => e.id === id)
+  }
+
+  const updateFavorites = () => {
+    if (appState.allContacts) {
+      const cloneContacts: GlobalContactInterface[] = [...appState!.allContacts]
+
+      cloneContacts.forEach((e: any) => {
+        if (e.id === id) {
+          e.favorite = !favorited
+        }
+      })
+
+      setAppState({
+        ...appState,
+        allContacts: cloneContacts
+      })
+
+      setFavorited(!favorited)
+    }
+  }
+
   useEffect(() => {
     if(params.id){
       setDisplay('EDIT')
       
-      const { firstName, lastName, email, phoneNumber, favorite, id } = location.state as LocationState  
-      firstRef.current.value = firstName
-      lastRef.current.value = lastName
-      phoneRef.current.value = phoneNumber
-      emailRef.current.value = email
-      setFavorited(favorite)
-      setID(id)
+      const foundContact: any = findContact(params.id) 
+      firstRef.current.value = foundContact.firstName
+      lastRef.current.value = foundContact.lastName
+      phoneRef.current.value = foundContact.phoneNumber
+      emailRef.current.value = foundContact.email
+      setFavorited(foundContact.favorite)
+      setID(params.id)
 
     } else {
       setDisplay('NEW')
@@ -169,7 +193,7 @@ const NewContactDisplay = () => {
             />
           </Box>
           <Box sx={{width: '90%',display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <IconButton aria-label={!favorited ? 'Add to favorites': 'Contact is favorited'} size='large' onClick={() => setFavorited(!favorited)}>
+          <IconButton aria-label={!favorited ? 'Add to favorites' : 'Contact is favorited'} size='large' onClick={() => display === 'NEW' ? setFavorited(!favorited) : updateFavorites()}>
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>

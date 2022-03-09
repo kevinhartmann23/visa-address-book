@@ -28,8 +28,6 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
   const location = useLocation()
   const [favorited, setFavorited] = useState(favorite)
   const [viewMore, setViewMore] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
 
   const formatAvatar = () => {
     const firstInitial = firstName.charAt(0).toUpperCase()

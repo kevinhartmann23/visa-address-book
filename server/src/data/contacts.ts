@@ -28,7 +28,7 @@ let contacts: IContacts = [
     id: 1000000000002,
   },
   {
-    phoneNumber: "(901) 583-8236",
+    phoneNumber: "9015838236",
     email: "dictum.placerat@aol.net",
     firstName: "Bernard",
     favorite: false,
@@ -36,7 +36,7 @@ let contacts: IContacts = [
     lastName: "Cooke"
   },
   {
-    phoneNumber: "(456) 944-3953",
+    phoneNumber: "4569443953",
     email: "felis.ullamcorper@outlook.net",
     firstName: "Xandra",
     favorite: false,
@@ -44,7 +44,7 @@ let contacts: IContacts = [
     lastName: "Pena"
   },
   {
-    phoneNumber: "1-734-856-7028",
+    phoneNumber: "17348567028",
     email: "fusce.diam@aol.net",
     firstName: "Sydney",
     favorite: false,
@@ -52,7 +52,7 @@ let contacts: IContacts = [
     lastName: "Barry"
   },
   {
-    phoneNumber: "(786) 558-5540",
+    phoneNumber: "7865585540",
     email: "ultrices@protonmail.org",
     firstName: "Francesca",
     favorite: false,
@@ -60,7 +60,7 @@ let contacts: IContacts = [
     lastName: "Blankenship"
   },
   {
-    phoneNumber: "(265) 326-2785",
+    phoneNumber: "2653262785",
     email: "erat.etiam@google.net",
     firstName: "Robin",
     favorite: false,

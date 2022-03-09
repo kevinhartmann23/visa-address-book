@@ -8,12 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import { GlobalContactInterface, useGlobalState } from '../context/AppContext'
 import { useNavigate } from 'react-router';
-import { ContactPageSharp } from '@mui/icons-material';
 
 const NewContactDisplay = () => {
   const { setAppState, appState } = useGlobalState()
   const navigate = useNavigate()
-  const [favorited, setFavortited] = useState(false)
+  const [favorited, setFavorited] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const firstRef: any = useRef()
@@ -112,7 +111,7 @@ const NewContactDisplay = () => {
             />
           </Box>
           <Box sx={{width: '90%',display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <IconButton aria-label={!favorited ? 'Add to favorites': 'Contact is favorited'} size='large' onClick={() => setFavortited(!favorited)}>
+            <IconButton aria-label={!favorited ? 'Add to favorites': 'Contact is favorited'} size='large' onClick={() => setFavorited(!favorited)}>
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>

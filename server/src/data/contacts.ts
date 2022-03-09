@@ -10,7 +10,7 @@ import { IContacts } from "../utils/interfaces";
 //   id: 101,
 // }
 
-const contacts: IContacts = [
+let contacts: IContacts = [
   {
     firstName: "Kevin",
     lastName: "Hartmann",

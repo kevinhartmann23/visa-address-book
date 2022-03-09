@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { useGlobalState, GlobalContactInterface } from '../context/AppContext';
+import { useNavigate } from "react-router-dom";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -22,9 +23,10 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: any) => {
+  const { appState, setAppState } = useGlobalState()
+  const navigate = useNavigate()
   const [favorited, setFavorited] = useState(favorite)
   const [viewMore, setViewMore] = useState(false)
-  const { appState, setAppState } = useGlobalState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -44,14 +46,12 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
 
   const updateFavorites = () => {
     if(appState.allContacts){
-      const cloneContacts: {}[] = [...appState!.allContacts]
+      const cloneContacts: GlobalContactInterface[] = [...appState!.allContacts]
   
       cloneContacts.forEach((e: any) => {
         if(e.id === id){
-          console.log(e)
           e.favorite = !favorited
         }
-        console.log(e)
       })
   
         setAppState({
@@ -60,8 +60,20 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
         })
       
         setFavorited(!favorited)  
+    }   
+  }
+
+  const handleEditButton = () => {
+    const config: GlobalContactInterface = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      favorite: favorited,
+      id
     }
-      
+
+    navigate(`contacts/${id}`, { state: config})
   }
   
   return (
@@ -82,7 +94,7 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
         <IconButton aria-label='view more information' size='small' onClick={() => setViewMore(!viewMore)}>
           <ExpandMoreIcon />
         </IconButton>
-        <IconButton aria-label='edit selected contact' size='small'>
+        <IconButton aria-label='edit selected contact' size='small' onClick={() => handleEditButton()}>
           <EditIcon />
         </IconButton>  
       </Box>

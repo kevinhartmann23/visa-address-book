@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 
 export interface GlobalStateInterface {
-  allContacts: {}[] | undefined
+  allContacts: GlobalContactInterface[] | undefined
 }
 
 export interface GlobalContactInterface {
@@ -16,30 +16,25 @@ export interface GlobalContactInterface {
   email: string | undefined
   phoneNumber: string | undefined
   favorite: boolean | undefined
-  id: number | undefined
+  id: string | undefined
 }
 
 
 const GlobalStateContext = createContext({
   appState: {} as Partial<GlobalStateInterface>,
   setAppState: {} as Dispatch<SetStateAction<Partial<GlobalStateInterface>>>,
-  newContactState: {} as Partial<GlobalContactInterface>,
-  setNewContactState: {} as Dispatch<SetStateAction<Partial<GlobalContactInterface>>>
 })
 
 const GlobalStateProvider = ({
   children,
   appValue = {} as GlobalStateInterface,
-  contactValue = {} as GlobalContactInterface
 } : {
   children: React.ReactNode,
   appValue?: Partial<GlobalStateInterface>,
-  contactValue?: Partial<GlobalContactInterface>
 }) => {
   const [appState, setAppState] = useState(appValue)
-  const [newContactState, setNewContactState] = useState(contactValue)
 
-  return <GlobalStateContext.Provider value={{ appState, setAppState, newContactState, setNewContactState }}>{children}</GlobalStateContext.Provider> 
+  return <GlobalStateContext.Provider value={{ appState, setAppState }}>{children}</GlobalStateContext.Provider> 
 }
 
 const useGlobalState = () => {

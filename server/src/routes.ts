@@ -33,38 +33,50 @@ router.post('/contacts', (req, res) => {
   }
 })
 
-//DELETE
+router.post('/contacts/update', (req: Request, res : Response) => {
+  const { id } = req.query
 
-router.delete('/contacts/:id', async (req: Request, res: Response) => {
-  console.log('HERE')
   try {
-
-    const findContact = await app.locals.contacts.find((contact: any) => {
-      const id = parseInt(req.params.id)
-      return contact.id === id
-    })
-
-    if (findContact) {
-      const updatedContacts = await app.locals.contacts.filter((contact: any) => {
-        const id = parseInt(req.params.id)
-        return contact.id !== id
-      })
-
-      app.locals.deleted = [...app.locals.deleted, findContact]
-      app.locals.contacts = updatedContacts
-
-      res.status(201).send({
-        data: JSON.stringify(updatedContacts),
-        message: `Contact with ID: ${req.params.id} deleted.`
-      })
-
-    } else {
-      throw new Error(`ERROR: Cannot find contact with id: ${req.params.id}`)
+    
+    if(!id) {
+      throw new Error('Request missing a parameter. {id: <String>}')
     }
 
-  } catch (err: any) {
-    res.status(500).send(JSON.stringify(err.message))
+    const index = app.locals.contacts.findIndex((e:any) => e.id === id)
+    app.locals.contacts[index] = req.body
+    
+    res.status(201).send({
+      data: JSON.stringify(app.locals),
+      message: `Contact successfully updated!`
+    })
+
+  } catch ( err: any ) {
+    res.status(422).send(JSON.stringify(err.message))
   }
+})
+
+//DELETE
+
+router.delete('/contacts', async (req: Request, res: Response) => {
+  const { id } = req.query
+
+  try {
+
+    if (!id) {
+      throw new Error('Request missing a parameter. {id: <String>}')
+    }
+
+    app.locals.contacts = app.locals.contacts.filter((e: any) => e.id !== id)
+
+    res.status(201).send({
+      data: JSON.stringify(app.locals),
+      message: `Contact permanently deleted!`
+    })
+
+  } catch (err: any) {
+    res.status(422).send(JSON.stringify(err.message))
+  }
+
 })
 
 export default router

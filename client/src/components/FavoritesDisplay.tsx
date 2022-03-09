@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useGlobalState } from '../context/AppContext'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -19,7 +19,7 @@ const FavoritesDisplay = () => {
   }, [appState.allContacts])
   
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
       <Typography variant="overline" component='h2' color="initial" sx={{width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem'}}>Top Favorites</Typography>
       <Divider sx={{marginBottom: '1rem'}}/>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
@@ -28,8 +28,8 @@ const FavoritesDisplay = () => {
             <ContactCard firstName={obj.firstName} lastName={obj.lastName} email={obj.email} phoneNumber={obj.phoneNumber} favorite={obj.favorite} id={obj.id}/>
           </Grid>
         ))}
-        {favorites!.length === 0 && <Typography variant="body1" color="initial">No Favorites</Typography>}
       </Grid>
+      {favorites!.length === 0 && <Typography variant="body1" color="initial" sx={{length: '100%', textAlign: 'center', marginTop: '4rem'}}>No Favorites</Typography>}
     </Box>
   );
 }

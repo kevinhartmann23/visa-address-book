@@ -18,6 +18,7 @@ function App() {
           <Route path='/favorites' element={<AllContacts title='Favorites' />} />
           <Route path='/contacts' element={<AllContacts title='All Contacts'/>} />
           <Route path='/add-new-contact' element={<NewContactDisplay/>} />
+          <Route path='/contacts/:id' element={<NewContactDisplay />} />
           <Route path='*' element={<NotFound/>} />
         </Routes>
         <Footer />

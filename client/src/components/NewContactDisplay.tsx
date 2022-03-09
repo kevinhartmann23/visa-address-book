@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Paper, Typography, Divider, Button } from '@mui/material';
@@ -7,15 +7,22 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import { GlobalContactInterface, useGlobalState } from '../context/AppContext'
-import { useNavigate } from 'react-router';
-import { ContactPageSharp } from '@mui/icons-material';
+import { useNavigate, useParams, useLocation } from 'react-router';
 
 const NewContactDisplay = () => {
   const { setAppState, appState } = useGlobalState()
   const navigate = useNavigate()
-  const [favorited, setFavortited] = useState(false)
+  const params = useParams()
+  const location = useLocation()
+
+  const [display, setDisplay] = useState('NEW')
+  const [favorited, setFavorited] = useState<boolean | undefined>(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [message, setMessage] = useState('')
+  const [validated, setValidated] = useState(false)
+  const [ id, setID] = useState<string | undefined>('')
+
   const firstRef: any = useRef()
   const lastRef: any = useRef()
   const emailRef: any = useRef()
@@ -46,6 +53,61 @@ const NewContactDisplay = () => {
       console.log(response)
     }
   }
+
+  const updateContact = async () => {
+    setError(false)
+    setLoading(true)
+
+    const config: CONFIG = {
+      method: 'POST',
+      endpoint: 'api/contacts/update',
+      params: { id },
+      data: configData()
+    }
+
+    const [isRequestSuccessful, response] = await axiosRequestHandler(config)
+
+    if (isRequestSuccessful) {
+      const data = JSON.parse(response.data)
+      
+      resetRefs()
+      setAppState({
+        ...appState,
+        allContacts: data.contacts,
+      })
+      navigate(favorited ? '/favorites' : '/contacts')
+    } else {
+      setError(true)
+      console.log(response)
+    }
+  }
+
+  const deleteContact = async () => {
+    setError(false)
+    setLoading(true)
+
+    const config: CONFIG = {
+      method: 'DELETE',
+      endpoint: 'api/contacts',
+      params: { id }
+    }
+
+    const [isRequestSuccessful, response] = await axiosRequestHandler(config)
+
+    if (isRequestSuccessful) {
+      const data = JSON.parse(response.data)
+      resetRefs()
+      navigate('/')
+      setAppState({
+        ...appState,
+        allContacts: data.contacts,
+      })
+      setDisplay('NEW')
+    } else {
+      setError(true)
+      console.log(response)
+    }
+  }
   
   const resetRefs = () => {
     firstRef.current.value = ''
@@ -62,16 +124,84 @@ const NewContactDisplay = () => {
       phoneNumber: phoneRef.current.value,
       email: emailRef.current.value,
       favorite: favorited,
-      id: Date.now()
+      id: id ? id : Date.now().toString()
     }
 
     return config
   }
 
+  const findContact = (id: any) => {
+    return appState.allContacts!.find((e: any) => e.id === id)
+  }
+
+  const updateFavorites = () => {
+    if (appState.allContacts) {
+      const cloneContacts: GlobalContactInterface[] = [...appState!.allContacts]
+
+      cloneContacts.forEach((e: any) => {
+        if (e.id === id) {
+          e.favorite = !favorited
+        }
+      })
+
+      setAppState({
+        ...appState,
+        allContacts: cloneContacts
+      })
+
+      setFavorited(!favorited)
+    }
+  }
+
+  useEffect(() => {
+    if(params.id){
+      setDisplay('EDIT')
+      
+      const foundContact: any = findContact(params.id) 
+      firstRef.current.value = foundContact.firstName
+      lastRef.current.value = foundContact.lastName
+      phoneRef.current.value = foundContact.phoneNumber
+      emailRef.current.value = foundContact.email
+      setFavorited(foundContact.favorite)
+      setID(params.id)
+
+    } else {
+      setDisplay('NEW')
+    }
+  })
+  
+  const validateInputs = (next: any) => {
+    const contactInfo = configData()
+
+    if(!contactInfo.firstName || !contactInfo.phoneNumber) {
+      setValidated(false)
+      setError(true)
+      setMessage('Contact must include a first name and phone number.')
+    }
+
+    if (contactInfo.firstName && contactInfo.phoneNumber) {
+      if (contactInfo.phoneNumber.length === 10 || contactInfo.phoneNumber.length === 10){
+        const digitsOnly = contactInfo.phoneNumber.split('').every(c => '0123456789'.includes(c))
+        if (digitsOnly){
+          setValidated(true)
+          setError(false)
+          next()
+        } else {
+          setValidated(false)
+          setError(true)
+          setMessage('Phone number is not valid, must contain numbers only.')
+        }
+      } else {
+        setValidated(false)
+        setError(true)
+        setMessage('Phone number is not valid, must be 10 or 11 digits.')
+      }
+    }
+  }
 
   return (
-    <div style={{ height: '87vh', padding: '.5rem 3rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <Typography variant='overline' component='h2' color='initial' sx={{ width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem' }}>Add New Contact</Typography>
+    <div style={{ marginTop: '4rem', height: '87vh', padding: '.5rem 3rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <Typography variant='overline' component='h2' color='initial' sx={{ width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem' }}>{display === 'NEW' ? 'Add New Contact' : 'Edit Contact'}</Typography>
       <Divider sx={{ marginBottom: '1.5rem', width: '80%' }} />
       <Paper elevation={2} sx={{display: 'flex', flexDirection: 'column', width: '50%', height: '75%', alignItems: 'center', justifyContent: 'center'}}>
           <Box 
@@ -112,13 +242,20 @@ const NewContactDisplay = () => {
             />
           </Box>
           <Box sx={{width: '90%',display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <IconButton aria-label={!favorited ? 'Add to favorites': 'Contact is favorited'} size='large' onClick={() => setFavortited(!favorited)}>
+            <IconButton aria-label={!favorited ? 'Add to favorites' : 'Contact is favorited'} size='large' onClick={() => display === 'NEW' ? setFavorited(!favorited) : updateFavorites()}>
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>
-            <Button aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={sendContacts}>
-              SAVE
-            </Button>
+            <Box sx={{ width: '50%', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                { display === 'EDIT' &&
+                  <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => deleteContact()}>
+                    DELETE
+                  </Button>
+                }            
+                <Button sx={{ height: '2.5rem', marginTop: '.5rem' }}aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={() => display === 'NEW'? validateInputs(sendContacts) : validateInputs(updateContact)}>
+                  SAVE
+                </Button>
+              </Box>
           </Box>
       </Paper>
     </div>

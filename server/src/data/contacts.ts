@@ -17,7 +17,7 @@ let contacts: IContacts = [
     email: "kevinhartmann23@gmail.com",
     phoneNumber: "12038898429",
     favorite: true,
-    id: 1000000000001,
+    id: '1000000000001',
   },
   {
     firstName: "Bill",
@@ -25,46 +25,46 @@ let contacts: IContacts = [
     email: "bill@ghostbusters.org",
     phoneNumber: "18005552368",
     favorite: true,
-    id: 1000000000002,
+    id: '1000000000002',
   },
   {
-    phoneNumber: "(901) 583-8236",
+    phoneNumber: "9015838236",
     email: "dictum.placerat@aol.net",
     firstName: "Bernard",
     favorite: false,
-    id: 1661146611,
+    id: '1661146611',
     lastName: "Cooke"
   },
   {
-    phoneNumber: "(456) 944-3953",
+    phoneNumber: "4569443953",
     email: "felis.ullamcorper@outlook.net",
     firstName: "Xandra",
     favorite: false,
-    id: 1645578518,
+    id: '1645578518',
     lastName: "Pena"
   },
   {
-    phoneNumber: "1-734-856-7028",
+    phoneNumber: "17348567028",
     email: "fusce.diam@aol.net",
     firstName: "Sydney",
     favorite: false,
-    id: 1665164183,
+    id: '1665164183',
     lastName: "Barry"
   },
   {
-    phoneNumber: "(786) 558-5540",
+    phoneNumber: "7865585540",
     email: "ultrices@protonmail.org",
     firstName: "Francesca",
     favorite: false,
-    id: 1671728709,
+    id: '1671728709',
     lastName: "Blankenship"
   },
   {
-    phoneNumber: "(265) 326-2785",
+    phoneNumber: "2653262785",
     email: "erat.etiam@google.net",
     firstName: "Robin",
     favorite: false,
-    id: 1621051007,
+    id: '1621051007',
     lastName: "Nunez"
   }
 ] 

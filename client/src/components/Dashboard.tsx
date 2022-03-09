@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalState } from '../context/AppContext'
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import Box from '@mui/material/Box';
@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [appState.allContacts])
 
   return (
-    <div style={{padding: '2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+    <div style={{ padding: '2rem 1rem', height: '83.25vh', backgroundColor: '#F7F7F7', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: '4rem'}}>
       <Box sx={{height: '100%', width: '45%'}}>
           <FavoritesDisplay />
       </ Box>

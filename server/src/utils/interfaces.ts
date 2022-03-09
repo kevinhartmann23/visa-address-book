@@ -4,7 +4,7 @@ export interface IContact {
   email: string
   phoneNumber: string
   favorite: boolean
-  id: number
+  id: string
 }
 
 export interface IContacts extends Array<IContact> {}

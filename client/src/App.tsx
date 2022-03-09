@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import AllContacts from './components/AllContacts';
-import NewContactDisplay from './components/RecentlyDeleted';
+import NewContactDisplay from './components/NewContactDisplay';
 import NotFound from './components/NotFound';
 import Footer from './components/Footer';
 import './App.css';

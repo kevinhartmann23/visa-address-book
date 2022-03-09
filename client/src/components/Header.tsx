@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import visaLogo from '../assets/visa_logo.png'
 
@@ -57,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const location = useLocation()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -80,7 +82,8 @@ const Header = () => {
             Address Book
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Search>
+          {(location.pathname === '/contacts' || location.pathname === '/favorites') &&
+            <Search>
             <SearchIconWrapper>
               <SearchIcon 
                 sx={{ mr: 2, color: '#3E3E3E' }}
@@ -90,7 +93,8 @@ const Header = () => {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+            </Search>
+          }
         </Toolbar>
       </StyledHeader>
     </Box>

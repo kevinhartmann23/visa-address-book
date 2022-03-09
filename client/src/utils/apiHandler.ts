@@ -6,12 +6,15 @@ export interface CONFIG {
   params?: any
   headers?: any
   data?: any
+  body?: any
 }
 
 const HOST = process.env.CLIENT_URL || 'http://localhost:5000'
 
 const axiosRequestHandler = async (obj: CONFIG) => {
-  const config: AxiosRequestConfig = {
+  console.log(obj)
+  
+  const config: any = {
     method: obj.method as Method,
     url: `${HOST || ''}/${obj.endpoint}`,
     withCredentials: false,
@@ -22,10 +25,12 @@ const axiosRequestHandler = async (obj: CONFIG) => {
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,'
     },
     params: obj.params,
-    data: obj.data
+    data: obj.data,
+    body: obj.body
   }
 
   try {
+    console.log('here, TRY!')
     const response = await axios(config)
     if (response.status === 200 || response.status === 201) {
       return [true, response.data]

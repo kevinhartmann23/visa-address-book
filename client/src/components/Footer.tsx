@@ -8,7 +8,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LocationCityOutlined } from '@mui/icons-material';
 
 const StyledAppBar = styled(AppBar)({
   position: 'fixed',

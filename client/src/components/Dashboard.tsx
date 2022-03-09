@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalState } from '../context/AppContext'
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import Box from '@mui/material/Box';

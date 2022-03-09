@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Paper, Typography, Divider, Button } from '@mui/material';
@@ -246,14 +246,16 @@ const NewContactDisplay = () => {
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>
-              { display === 'EDIT' &&
-                <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => deleteContact()}>
-                  DELETE
+            <Box sx={{ width: '50%', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                { display === 'EDIT' &&
+                  <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => deleteContact()}>
+                    DELETE
+                  </Button>
+                }            
+                <Button sx={{ height: '2.5rem', marginTop: '.5rem' }}aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={() => display === 'NEW'? validateInputs(sendContacts) : validateInputs(updateContact)}>
+                  SAVE
                 </Button>
-              }            
-              <Button sx={{ height: '2.5rem', marginTop: '.5rem' }}aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={() => display === 'NEW'? validateInputs(sendContacts) : validateInputs(updateContact)}>
-                SAVE
-              </Button>
+              </Box>
           </Box>
       </Paper>
     </div>

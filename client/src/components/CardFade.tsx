@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import ContactsIcon from '@mui/icons-material/Contacts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Box from '@mui/material/Box';
-import { CardActionArea, CardActions } from '@mui/material';
+import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface IProps {

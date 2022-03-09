@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, Method } from 'axios'
+import axios, { Method } from 'axios'
 
 export interface CONFIG {
   method: Method
@@ -12,8 +12,7 @@ export interface CONFIG {
 const HOST = process.env.CLIENT_URL || 'http://localhost:5000'
 
 const axiosRequestHandler = async (obj: CONFIG) => {
-  console.log(obj)
-  
+
   const config: any = {
     method: obj.method as Method,
     url: `${HOST || ''}/${obj.endpoint}`,

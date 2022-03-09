@@ -1,4 +1,3 @@
-import React from 'react';
 import errorIcon from '../assets/404-icon-visa.png'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'

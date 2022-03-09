@@ -75,17 +75,17 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
     }
     
     if (location.pathname === '/') {
-      navigate(`contacts/${id}`)
+      navigate(`contacts/${id}`, { state: config })
     } else {
-      navigate(`/contacts/${id}`, { replace: true})
+      navigate(`/contacts/${id}`, { replace: true, state: config })
     }
   }
   
   return (
     <StyledPaper id={id.toString()}>
       <Avatar sx={{ bgcolor: '#093FA9'}}>{formatAvatar()}</Avatar>
-      <Box sx={{padding: '.25rem'}}>
-        <Typography variant="overline" color="initial">{firstName + ' ' + lastName}</Typography>
+      <Box sx={{padding: '.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
+        <Typography variant="overline" color="initial" sx={{lineHeight: 1.75}}>{firstName + ' ' + lastName}</Typography>
         <Typography variant="subtitle1" color="initial" sx={{ length: 'contain', fontSize: '12px' }}>{formatPhoneNumber()}</Typography>
         {viewMore &&
           <Typography variant="subtitle2" color="initial" sx={{length: 'contain', fontSize: '10px'}} component='a' href={`mailto:${email}`}>{email}</Typography>

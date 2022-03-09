@@ -34,8 +34,6 @@ router.post('/contacts', (req, res) => {
 })
 
 router.post('/contacts/update', (req: Request, res : Response) => {
-  
-  console.log('HERE -> ROUTES.TSX', req.query.id )
   const { id } = req.query
 
   try {
@@ -59,36 +57,26 @@ router.post('/contacts/update', (req: Request, res : Response) => {
 
 //DELETE
 
-router.delete('/contacts/:id', async (req: Request, res: Response) => {
-  console.log('HERE')
+router.delete('/contacts', async (req: Request, res: Response) => {
+  const { id } = req.query
+
   try {
 
-    const findContact = await app.locals.contacts.find((contact: any) => {
-      const id = parseInt(req.params.id)
-      return contact.id === id
-    })
-
-    if (findContact) {
-      const updatedContacts = await app.locals.contacts.filter((contact: any) => {
-        const id = parseInt(req.params.id)
-        return contact.id !== id
-      })
-
-      app.locals.deleted = [...app.locals.deleted, findContact]
-      app.locals.contacts = updatedContacts
-
-      res.status(201).send({
-        data: JSON.stringify(updatedContacts),
-        message: `Contact with ID: ${req.params.id} deleted.`
-      })
-
-    } else {
-      throw new Error(`ERROR: Cannot find contact with id: ${req.params.id}`)
+    if (!id) {
+      throw new Error('Request missing a parameter. {id: <String>}')
     }
 
+    app.locals.contacts = app.locals.contacts.filter((e: any) => e.id !== id)
+
+    res.status(201).send({
+      data: JSON.stringify(app.locals),
+      message: `Contact permanently deleted!`
+    })
+
   } catch (err: any) {
-    res.status(500).send(JSON.stringify(err.message))
+    res.status(422).send(JSON.stringify(err.message))
   }
+
 })
 
 export default router

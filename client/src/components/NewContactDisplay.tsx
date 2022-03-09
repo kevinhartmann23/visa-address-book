@@ -9,15 +9,6 @@ import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import { GlobalContactInterface, useGlobalState } from '../context/AppContext'
 import { useNavigate, useParams, useLocation } from 'react-router';
 
-type LocationState = {
-  firstName: string
-  lastName: string
-  email: string
-  phoneNumber: string
-  favorite: boolean
-  id: string
-}
-
 const NewContactDisplay = () => {
   const { setAppState, appState } = useGlobalState()
   const navigate = useNavigate()
@@ -28,6 +19,8 @@ const NewContactDisplay = () => {
   const [favorited, setFavorited] = useState<boolean | undefined>(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [message, setMessage] = useState('')
+  const [validated, setValidated] = useState(false)
   const [ id, setID] = useState<string | undefined>('')
 
   const firstRef: any = useRef()
@@ -83,6 +76,33 @@ const NewContactDisplay = () => {
         allContacts: data.contacts,
       })
       navigate(favorited ? '/favorites' : '/contacts')
+    } else {
+      setError(true)
+      console.log(response)
+    }
+  }
+
+  const deleteContact = async () => {
+    setError(false)
+    setLoading(true)
+
+    const config: CONFIG = {
+      method: 'DELETE',
+      endpoint: 'api/contacts',
+      params: { id }
+    }
+
+    const [isRequestSuccessful, response] = await axiosRequestHandler(config)
+
+    if (isRequestSuccessful) {
+      const data = JSON.parse(response.data)
+      resetRefs()
+      navigate('/')
+      setAppState({
+        ...appState,
+        allContacts: data.contacts,
+      })
+      setDisplay('NEW')
     } else {
       setError(true)
       console.log(response)
@@ -149,9 +169,38 @@ const NewContactDisplay = () => {
       setDisplay('NEW')
     }
   })
+  
+  const validateInputs = (next: any) => {
+    const contactInfo = configData()
+
+    if(!contactInfo.firstName || !contactInfo.phoneNumber) {
+      setValidated(false)
+      setError(true)
+      setMessage('Contact must include a first name and phone number.')
+    }
+
+    if (contactInfo.firstName && contactInfo.phoneNumber) {
+      if (contactInfo.phoneNumber.length === 10 || contactInfo.phoneNumber.length === 10){
+        const digitsOnly = contactInfo.phoneNumber.split('').every(c => '0123456789'.includes(c))
+        if (digitsOnly){
+          setValidated(true)
+          setError(false)
+          next()
+        } else {
+          setValidated(false)
+          setError(true)
+          setMessage('Phone number is not valid, must contain numbers only.')
+        }
+      } else {
+        setValidated(false)
+        setError(true)
+        setMessage('Phone number is not valid, must be 10 or 11 digits.')
+      }
+    }
+  }
 
   return (
-    <div style={{ height: '87vh', padding: '.5rem 3rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    <div style={{ marginTop: '4rem', height: '87vh', padding: '.5rem 3rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <Typography variant='overline' component='h2' color='initial' sx={{ width: '100%', fontSize: '40px', fontWeight: '300', textAlign: 'center', height: '5rem' }}>{display === 'NEW' ? 'Add New Contact' : 'Edit Contact'}</Typography>
       <Divider sx={{ marginBottom: '1.5rem', width: '80%' }} />
       <Paper elevation={2} sx={{display: 'flex', flexDirection: 'column', width: '50%', height: '75%', alignItems: 'center', justifyContent: 'center'}}>
@@ -193,13 +242,18 @@ const NewContactDisplay = () => {
             />
           </Box>
           <Box sx={{width: '90%',display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <IconButton aria-label={!favorited ? 'Add to favorites' : 'Contact is favorited'} size='large' onClick={() => display === 'NEW' ? setFavorited(!favorited) : updateFavorites()}>
+            <IconButton aria-label={!favorited ? 'Add to favorites' : 'Contact is favorited'} size='large' onClick={() => display === 'NEW' ? setFavorited(!favorited) : updateFavorites()}>
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>
-            <Button aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={() => display === 'NEW'? sendContacts() : updateContact()}>
-              SAVE
-            </Button>
+              { display === 'EDIT' &&
+                <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => deleteContact()}>
+                  DELETE
+                </Button>
+              }            
+              <Button sx={{ height: '2.5rem', marginTop: '.5rem' }}aria-label='Save Contact' variant='contained' color='primary' size='small' onClick={() => display === 'NEW'? validateInputs(sendContacts) : validateInputs(updateContact)}>
+                SAVE
+              </Button>
           </Box>
       </Paper>
     </div>

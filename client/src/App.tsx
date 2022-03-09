@@ -6,7 +6,6 @@ import AllContacts from './components/AllContacts';
 import NewContactDisplay from './components/NewContactDisplay';
 import NotFound from './components/NotFound';
 import Footer from './components/Footer';
-import ContactEditForm from './components/ContactEditForm';
 import './App.css';
 
 function App() {

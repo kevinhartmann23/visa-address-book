@@ -56,7 +56,7 @@ const Footer = () => {
           </StyledFab>
         </Toolbar>
       }
-        {(location.pathname === '/add-new-contact' || location.pathname === '/contacts /:id') &&
+        {(location.pathname === '/add-new-contact' || location.state ) &&
           <Toolbar>
             <StyledButton variant="contained" color='secondary' startIcon={<ArrowBackIosNewIcon />} onClick={() => navigate('/')}>
               Home

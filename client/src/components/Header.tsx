@@ -13,7 +13,7 @@ import visaLogo from '../assets/visa_logo.png'
 
 const StyledHeader = styled(AppBar)({
   backgroundColor: "#FFF",
-  position: 'static',
+  position: 'fixed',
   height: '4rem'
 })
 

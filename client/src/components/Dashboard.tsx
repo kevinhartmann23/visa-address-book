@@ -4,11 +4,14 @@ import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import Box from '@mui/material/Box';
 import CardFade from './CardFade';
 import FavoritesDisplay from './FavoritesDisplay';
+import Progress from './general/ProgressWheel';
+import ErrorModal from './general/ErrorModal';
 
 const Dashboard = () => {
   const { setAppState, appState } = useGlobalState()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
 
   const getContacts = async () => {
     setError(false)
@@ -29,8 +32,9 @@ const Dashboard = () => {
       })
     } else {
       setError(true)
-      console.log(response)
+      setMessage('Somethings not right! Try again.')
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -49,6 +53,14 @@ const Dashboard = () => {
           <CardFade title='Favorites' iconName='favorites' redirectUrl='/favorites' />
           <CardFade title='Add Contact' iconName='new contact' redirectUrl='/add-new-contact' />
       </Box>
+      <Progress open={loading} />
+      <ErrorModal
+        openModal={error}
+        closeModal={() => {
+          setError(false)
+          setMessage('')
+        }}
+        bodyMessage={message} />
     </div>
   );
 }

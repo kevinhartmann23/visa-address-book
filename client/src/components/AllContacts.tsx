@@ -9,8 +9,6 @@ import Divider from '@mui/material/Divider';
 const AllContacts = (props: {title: string}) => {
   const { appState } = useGlobalState()
   const [contacts, setContacts] = useState<any>([])
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (appState.allContacts) {

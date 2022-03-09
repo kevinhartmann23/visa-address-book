@@ -7,20 +7,22 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import axiosRequestHandler, { CONFIG } from '../utils/apiHandler';
 import { GlobalContactInterface, useGlobalState } from '../context/AppContext'
-import { useNavigate, useParams, useLocation } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import ErrorModal from './general/ErrorModal';
+import ConfirmationModal from './general/ConfirmModal';
+import Progress from './general/ProgressWheel';
 
 const NewContactDisplay = () => {
   const { setAppState, appState } = useGlobalState()
   const navigate = useNavigate()
   const params = useParams()
-  const location = useLocation()
 
   const [display, setDisplay] = useState('NEW')
   const [favorited, setFavorited] = useState<boolean | undefined>(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [message, setMessage] = useState('')
-  const [validated, setValidated] = useState(false)
+  const [confirm, setConfirm] = useState(false)
   const [ id, setID] = useState<string | undefined>('')
 
   const firstRef: any = useRef()
@@ -50,8 +52,9 @@ const NewContactDisplay = () => {
       navigate(favorited ? '/favorites':'/contacts')
     } else {
       setError(true)
-      console.log(response)
+      setMessage('Something went wrong, try again.')
     }
+    setLoading(false)
   }
 
   const updateContact = async () => {
@@ -78,8 +81,9 @@ const NewContactDisplay = () => {
       navigate(favorited ? '/favorites' : '/contacts')
     } else {
       setError(true)
-      console.log(response)
+      setMessage('Something went wrong, try again.')
     }
+    setLoading(false)
   }
 
   const deleteContact = async () => {
@@ -105,8 +109,9 @@ const NewContactDisplay = () => {
       setDisplay('NEW')
     } else {
       setError(true)
-      console.log(response)
+      setMessage('Something went wrong, try again.')
     }
+    setLoading(false)
   }
   
   const resetRefs = () => {
@@ -174,7 +179,6 @@ const NewContactDisplay = () => {
     const contactInfo = configData()
 
     if(!contactInfo.firstName || !contactInfo.phoneNumber) {
-      setValidated(false)
       setError(true)
       setMessage('Contact must include a first name and phone number.')
     }
@@ -183,16 +187,13 @@ const NewContactDisplay = () => {
       if (contactInfo.phoneNumber.length === 10 || contactInfo.phoneNumber.length === 10){
         const digitsOnly = contactInfo.phoneNumber.split('').every(c => '0123456789'.includes(c))
         if (digitsOnly){
-          setValidated(true)
           setError(false)
           next()
         } else {
-          setValidated(false)
           setError(true)
           setMessage('Phone number is not valid, must contain numbers only.')
         }
       } else {
-        setValidated(false)
         setError(true)
         setMessage('Phone number is not valid, must be 10 or 11 digits.')
       }
@@ -246,9 +247,9 @@ const NewContactDisplay = () => {
               {favorited && <FavoriteIcon fontSize='large' color='primary'/>}
               {!favorited && <FavoriteBorderIcon fontSize='large'color='primary'/>}
             </IconButton>
-            <Box sx={{ width: '50%', flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Box sx={{ width: 'auto', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 { display === 'EDIT' &&
-                  <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => deleteContact()}>
+                  <Button sx={{marginRight: '1rem', height: '2.5rem', marginTop: '.5rem'}} aria-label='Delete Contact' variant='contained' color='error' size='small' onClick={() => setConfirm(true)}>
                     DELETE
                   </Button>
                 }            
@@ -258,6 +259,20 @@ const NewContactDisplay = () => {
               </Box>
           </Box>
       </Paper>
+      <Progress open={loading}/>
+      <ConfirmationModal 
+        openModal={confirm}
+        closeModal={() => setConfirm(false)}
+        confirm={() => deleteContact()}
+        bodyMessage='This will delete contact permanently. Click continue to proceed.'
+      />
+      <ErrorModal 
+        openModal={error}
+        closeModal={() => {
+          setError(false)
+          setMessage('')
+        }}
+        bodyMessage={message}/>
     </div>
   );
 }

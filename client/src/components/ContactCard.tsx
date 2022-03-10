@@ -80,13 +80,15 @@ const ContactCard = ({ firstName, lastName, email, phoneNumber, favorite, id }: 
   }
   
   return (
-    <StyledPaper id={id.toString()}>
-      <Avatar sx={{ bgcolor: '#093FA9'}}>{formatAvatar()}</Avatar>
+    <StyledPaper id={id.toString()} aria-required="true" tabIndex={0}>
+      <Avatar sx={{ bgcolor: '#093FA9'}} component='div'>
+        <Typography variant='body1' component='h4'>{formatAvatar()}</Typography>
+      </Avatar>
       <Box sx={{padding: '.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
-        <Typography variant="overline" color="initial" sx={{lineHeight: 1.75}}>{firstName + ' ' + lastName}</Typography>
-        <Typography variant="subtitle1" color="initial" sx={{ length: 'contain', fontSize: '12px' }}>{formatPhoneNumber()}</Typography>
+        <Typography tabIndex={0} variant="overline" component='h5' color="initial" sx={{lineHeight: 1.75}}>{firstName + ' ' + lastName}</Typography>
+        <Typography tabIndex={0} variant="subtitle1" color="initial" sx={{ length: 'contain', fontSize: '12px' }}>{formatPhoneNumber()}</Typography>
         {viewMore &&
-          <Typography variant="subtitle2" color="initial" sx={{length: 'contain', fontSize: '10px'}} component='a' href={`mailto:${email}`}>{email}</Typography>
+          <Typography tabIndex={0} variant="subtitle2" color="initial" sx={{length: 'contain', fontSize: '10px'}} component='a' href={`mailto:${email}`}>{email}</Typography>
         }
       </Box>
       <Box sx={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

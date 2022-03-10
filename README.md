@@ -13,7 +13,7 @@ git clone git@github.com:kevinhartmann23/visa-address-book.git
 
 2. Install Dependencies for Server & UI From Root
 ```
-npm install_deps
+npm run install_deps
 ```
 
 3. Start Server & UI from Root
@@ -28,13 +28,17 @@ If you prefer to not run server and client concurrently, follow these sub steps.
 
     ```
     cd server
+    ```
+    ```
     npm run start:nodemon
     ```
 
     2. Start Client
 
-        ```
+    ```
     cd ../client
+    ```
+    ```
     npm start
     ```
 

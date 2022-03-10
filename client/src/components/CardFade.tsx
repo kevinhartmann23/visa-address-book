@@ -71,7 +71,7 @@ const CardFade = ({ title, redirectUrl, iconName }: IProps) => {
           {iconName === 'contacts' && <ContactsIcon sx={{color: '#F7BD19', fontSize: '90px'}} />}
           {iconName === 'favorites' && <FavoriteIcon sx={{ color: '#F7BD19', fontSize: '90px' }} />}
           {iconName === 'new contact' && <AddCircleIcon sx={{ color: '#F7BD19', fontSize: '90px', }} />}
-          <StyledTypog variant='h3'>{title}</StyledTypog>
+          <StyledTypog variant='h2'>{title}</StyledTypog>
         </StyledBox>
         <Box sx={{ flexGrow: 1 }} />
         </ CardActionArea>

@@ -13,7 +13,7 @@ git clone git@github.com:kevinhartmann23/visa-address-book.git
 
 2. Install Dependencies for Server & UI From Root
 ```
-npm install_deps
+npm run install_deps
 ```
 
 3. Start Server & UI from Root

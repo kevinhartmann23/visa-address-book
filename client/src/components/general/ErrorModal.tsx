@@ -23,7 +23,6 @@ const StyledDiv = styled(Box)({
 
 const StyledBox = styled(Box)({
   backgroundColor: '#FFFFFF',
-  border: '2px solid #000',
   boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)', // tslint:disable-line
   padding: '1rem',
   display: 'flex',
@@ -58,7 +57,7 @@ const ErrorModal = ({ openModal, closeModal, bodyMessage }: Props) => {
               <Typography variant="h4" color="error">
                 Oops!
               </Typography>
-              <Typography variant="body1" color="error">
+              <Typography variant="body1">
                 {bodyMessage}
               </Typography>
             </StyledDiv>

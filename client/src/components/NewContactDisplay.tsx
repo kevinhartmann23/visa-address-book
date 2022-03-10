@@ -173,7 +173,7 @@ const NewContactDisplay = () => {
     } else {
       setDisplay('NEW')
     }
-  })
+  }, [params]) //eslint-disable-line
   
   const validateInputs = (next: any) => {
     const contactInfo = configData()

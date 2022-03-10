@@ -18,7 +18,7 @@ const AllContacts = (props: {title: string}) => {
         setContacts(appState.allContacts.filter((el: any) => el.favorite === true))
       }
     }
-  }, [appState.allContacts])
+  }, [appState.allContacts, props.title])
   
   return (
     <div style={{padding: '.5rem 3rem 7rem 3rem', marginTop: '4rem' }}>

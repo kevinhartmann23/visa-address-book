@@ -50,7 +50,7 @@ const StyledTypog = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const StyledBox = styled(Typography)(({ theme }) => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   width: '95%',
   height: '100%',
   display: 'flex',

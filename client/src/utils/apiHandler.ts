@@ -29,7 +29,6 @@ const axiosRequestHandler = async (obj: CONFIG) => {
   }
 
   try {
-    console.log(config)
     const response = await axios(config)
     if (response.status === 200 || response.status === 201) {
       return [true, response.data]

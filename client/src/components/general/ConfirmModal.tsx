@@ -62,9 +62,14 @@ const ConfirmationModal = ({ openModal, closeModal, bodyMessage, confirm }: Prop
                 {bodyMessage}
               </Typography>
             </StyledDiv>
-            <Button aria-label='confirm button' variant="contained" color='primary' onClick={() => handleClose()}>
-              Continue
-            </Button>
+            <Box sx={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'space-between'}}>
+              <Button aria-label='cancel button' variant="contained" color='error' onClick={() => closeModal()}>
+                Cancel
+              </Button>
+              <Button aria-label='confirm button' variant="contained" color='primary' onClick={() => handleClose()}>
+                Continue
+              </Button>
+            </Box>
           </StyledBox>
         </Fade>
       </StyledModal>

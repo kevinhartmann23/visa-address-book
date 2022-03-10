@@ -28,13 +28,17 @@ If you prefer to not run server and client concurrently, follow these sub steps.
 
     ```
     cd server
+    ```
+    ```
     npm run start:nodemon
     ```
 
     2. Start Client
 
-        ```
+    ```
     cd ../client
+    ```
+    ```
     npm start
     ```
 

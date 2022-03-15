@@ -11,6 +11,8 @@ import { useNavigate, useParams } from 'react-router';
 import ErrorModal from './general/ErrorModal';
 import ConfirmationModal from './general/ConfirmModal';
 import Progress from './general/ProgressWheel';
+import { debug } from 'console';
+import { BrowserRouter } from 'react-router-dom';
 
 const NewContactDisplay = () => {
   const { setAppState, appState } = useGlobalState()
@@ -187,8 +189,14 @@ const NewContactDisplay = () => {
       if (contactInfo.phoneNumber.length === 10 || contactInfo.phoneNumber.length === 10){
         const digitsOnly = contactInfo.phoneNumber.split('').every(c => '0123456789'.includes(c))
         if (digitsOnly){
-          setError(false)
-          next()
+          if (contactInfo.email) {
+            if (validateEmail()) {
+              next()
+            } else {
+              setError(true)
+              setMessage('Email address must include proper email format - example@address.com')
+            }
+          }
         } else {
           setError(true)
           setMessage('Phone number is not valid, must contain numbers only.')
@@ -198,6 +206,10 @@ const NewContactDisplay = () => {
         setMessage('Phone number is not valid, must be 10 or 11 digits.')
       }
     }
+  }
+
+  const validateEmail = () => {
+      return emailRef.current.value.split('').includes('@')
   }
 
   return (
